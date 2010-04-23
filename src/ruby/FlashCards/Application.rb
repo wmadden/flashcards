@@ -75,7 +75,7 @@ private
   def print_statistics
     puts 
     puts "You answered #{@correct.length} out of #{@index.cards.length} questions correctly"
-    puts "That's #{((@correct.length / @index.cards.length) * 100).round}%!"
+    puts "That's #{((@correct.length / @index.cards.length.to_f) * 100).round}%!"
 
     return if @incorrect.length == 0
     
