@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+# 
+# Flashcards is a simple utility to help you memorize things.
+# 
+# William Madden, w.a.madden@gmail.com
+# 23/04/2010
+################################################################################
+
+require "FlashCards/Application"
+
+include FlashCards
+
+# Entry point
+Application.new.run( ARGV )
+

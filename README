@@ -1,0 +1,11 @@
+
+Flashcards
+
+Flashcards is a very simple application to help you learn the language of your
+choice. It reads a flash card index, a file that lists pairs of strings that
+correspond to the front and back of each flashcard, and displays a flashcard at
+random. You enter the answer (the string on the other side) and it records your
+score.
+
+William Madden, w.a.madden@gmail.com
+23/04/2010
