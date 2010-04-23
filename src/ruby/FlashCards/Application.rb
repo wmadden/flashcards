@@ -40,49 +40,52 @@ class Application
   #-----------------------------------------------------------------------------
   
   def run( args )
+    trap('SIGINT') do
+      print_statistics
+      exit
+    end
+    
     index_source = args[0]
     @index = Index.new( index_source )
+    @index.shuffle
     
-    cards = Array.new( @index.cards )
+    cards = @index.cards
     
-    srand
-    shuffle( cards )
-    
-    correct = []
-    incorrect = []
+    @correct = []
+    @incorrect = []
     
     cards.each do |card|
       puts "#{card.front}?"
-      card.supplied_answer = $stdin.gets().strip!
+      answer = $stdin.gets().strip!
       
-      if card.supplied_answer == card.back
-        correct << card
+      if card.try( answer )
+        @correct << card
       else
-        incorrect << card
+        @incorrect << card
       end
-
+      
       puts
     end
-
-    puts "\nYou answered #{correct.length} questions correctly"
-    puts "That's #{(correct.length / cards.length * 100).round}%!"
-    puts 
-    puts "You need to practice:"
-    incorrect.each do |card|
-      puts "  #{card.front}"
-      puts "    You answered:   #{card.supplied_answer.inspect}"
-      puts "    Correct answer: #{card.back.inspect}"
-    end
+    
+    print_statistics
   end
 
 private
 
-  def shuffle( cards )
-    for i in 0 .. cards.length-1
-      swap_with = rand( cards.length )
-      cards[i], cards[swap_with] = cards[swap_with], cards[i]
+  def print_statistics
+    puts 
+    puts "You answered #{@correct.length} out of #{@index.cards.length} questions correctly"
+    puts "That's #{((@correct.length / @index.cards.length) * 100).round}%!"
+
+    return if @incorrect.length == 0
+    
+    puts 
+    puts "You need to practice:"
+    @incorrect.each do |card|
+      puts "  #{card.front}"
+      puts "    You answered:   #{card.supplied_answer.inspect}"
+      puts "    Correct answer: #{card.back.inspect}"
     end
-    cards
   end
   
 end

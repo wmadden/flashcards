@@ -39,11 +39,19 @@ class Index
   #  
   #-----------------------------------------------------------------------------
 
+  def shuffle
+    
+    for i in 0 .. @cards.length-1
+      swap_with = rand( @cards.length )
+      @cards[i], @cards[swap_with] = @cards[swap_with], @cards[i]
+    end
+  end
+  
 private
 
   def load_from_file( file )
     File.open(file).lines.each do |line|
-      return if line.strip!.empty?
+      next if line.strip!.empty? || line.split('-').length != 2
       front, back = line.split('-')
       front.strip!
       back.strip!
