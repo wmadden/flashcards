@@ -40,10 +40,13 @@ class Index
   #-----------------------------------------------------------------------------
 
   def shuffle
-    
     for i in 0 .. @cards.length-1
       swap_with = rand( @cards.length )
       @cards[i], @cards[swap_with] = @cards[swap_with], @cards[i]
+
+      if rand(2) >= 1
+        @cards[i].front, @cards[i].back = @cards[i].back, @cards[i].front
+      end
     end
   end
   
